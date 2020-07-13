@@ -1,5 +1,6 @@
+
 kind: pipeline
-name: build
+name: master
 
 platform:
   os: linux
@@ -14,10 +15,13 @@ steps:
   pull: if-not-exists
   image: docker
   commands:
-  - /bin/sh ./build.drone.sh
+  - docker login $${REGISTRY_ENDPOINT} --username $${REGISTRY_USERNAME} --password $${REGISTRY_PASSWORD}
+  - docker build --rm=true --pull=true -t $${REGISTRY_ENDPOINT}/$${REGISTRY_REPO} -f Dockerfile ./
+  - docker tag $${REGISTRY_ENDPOINT}/$${REGISTRY_REPO} $${REGISTRY_ENDPOINT}/$${REGISTRY_REPO}:drone
+  - docker push $${REGISTRY_ENDPOINT}/$${REGISTRY_REPO}:drone
   environment:
     REGISTRY_ENDPOINT: registry.hub.docker.com
-    REGISTRY_REPO: dockerdig/ramium
+    REGISTRY_REPO: dockerdig/hello-world
     REGISTRY_USERNAME:
       from_secret: REGISTRY_USERNAME
     REGISTRY_PASSWORD:
@@ -34,4 +38,3 @@ volumes:
 trigger:
   branch:
   - master
-  - release

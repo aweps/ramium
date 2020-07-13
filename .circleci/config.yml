@@ -1,3 +1,4 @@
+
 version: 2.1
 jobs:
   build_docker:
@@ -5,7 +6,7 @@ jobs:
       - image: docker
     environment:
       REGISTRY_ENDPOINT: registry.hub.docker.com
-      REGISTRY_REPO: dockerdig/ramium
+      REGISTRY_REPO: dockerdig/hello-world
     steps:
 
       # checkout the repository
@@ -19,8 +20,8 @@ jobs:
       - run: |
           docker login ${REGISTRY_ENDPOINT} --username ${REGISTRY_USERNAME} --password ${REGISTRY_PASSWORD}
           docker build --rm=true --pull=true -t ${REGISTRY_ENDPOINT}/${REGISTRY_REPO} -f Dockerfile ./
-          TAG=${CIRCLE_SHA1:0:7} && docker tag ${REGISTRY_ENDPOINT}/${REGISTRY_REPO} ${REGISTRY_ENDPOINT}/${REGISTRY_REPO}:${TAG} && docker push ${REGISTRY_ENDPOINT}/${REGISTRY_REPO}:${TAG}
-          TAG=circleci && docker tag ${REGISTRY_ENDPOINT}/${REGISTRY_REPO} ${REGISTRY_ENDPOINT}/${REGISTRY_REPO}:${TAG} && docker push ${REGISTRY_ENDPOINT}/${REGISTRY_REPO}:${TAG}
+          docker tag ${REGISTRY_ENDPOINT}/${REGISTRY_REPO} ${REGISTRY_ENDPOINT}/${REGISTRY_REPO}:circleci
+          docker push ${REGISTRY_ENDPOINT}/${REGISTRY_REPO}:circleci
 
 workflows:
   version: 2.1
