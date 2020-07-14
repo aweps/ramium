@@ -1,3 +1,4 @@
+
 version: "1"
 rules:                      # Array of rules
   - base: upstream           # Required. Target branch
@@ -6,4 +7,5 @@ rules:                      # Array of rules
     mergeUnstable: false    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
   - base: master
     upstream: upstream       # Required. Can be a branch in the same forked repo.
+    mergeMethod: merge  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
 label: ":arrow_heading_down: pull"  # Optional
