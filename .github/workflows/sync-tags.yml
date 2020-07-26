@@ -18,9 +18,9 @@ jobs:
         with:
           token: ${{ secrets.PA_TOKEN }}
 
-      - name:
+      - name: Sync Tags
         run: |
-          git remote add fork git@github.com:genx7up/ramium.git
+          git remote add fork https://x-access-token:${PA_TOKEN}@github.com/genx7up/ramium.git
           for TAG in $(comm -23 <(git ls-remote --tags fork | grep -v '\^{}' | awk '{print $2}') <(git ls-remote --tags origin | grep -v '\^{}' | awk '{print $2}')); do
             git fetch --depth=1 fork $TAG:$TAG
           done
