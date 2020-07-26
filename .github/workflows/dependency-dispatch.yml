@@ -1,0 +1,30 @@
+name: Docker
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ '*' ]
+  pull_request:
+    branches: [ master ]
+  release:
+    types: [ published ]
+
+jobs:
+
+  dispatch:
+    strategy:
+      matrix:
+        repo: ["aweps/demo"]
+
+    name: Dispatch
+    runs-on: ubuntu-latest
+    steps:
+
+     - name: Repository Dispatch
+       uses: peter-evans/repository-dispatch@v1
+       with:
+         token: ${{ secrets.PA_TOKEN }}
+         repository: ${{ matrix.repo }}
+         event-type: dependency_update
+         client-payload: '{ "github": ${{ tojson(github) }}}'
+
