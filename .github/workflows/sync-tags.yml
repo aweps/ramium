@@ -22,6 +22,7 @@ jobs:
         run: |
           git remote add fork https://x-access-token:${PA_TOKEN}@github.com/genx7up/ramium.git
           for TAG in $(comm -23 <(git ls-remote --tags fork | grep -v '\^{}' | grep -v '-' | awk '{print $2}') <(git ls-remote --tags origin | grep -v '\^{}' | awk '{print $2}')); do
+            echo $TAG
             git tag
             echo "fetch"
             git fetch --depth=1 fork $TAG:$TAG
