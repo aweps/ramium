@@ -31,4 +31,6 @@ jobs:
             git push origin --tags
             echo "done"
           done
+        env:
+          GITHUB_TOKEN: ${{ secrets.PA_TOKEN }}  
           
