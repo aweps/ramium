@@ -25,7 +25,7 @@ jobs:
             echo $TAG
             git tag
             echo "fetch"
-            git fetch --depth=1 fork $TAG:$TAG
+            git fetch fork $TAG:$TAG --no-tags
             git tag
             echo "push"
             git push origin --tags
