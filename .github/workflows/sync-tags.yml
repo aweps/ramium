@@ -1,0 +1,27 @@
+name: Docker
+
+on:
+  schedule:
+    - cron: "45 3 * * *"
+  push:
+    branches: [ master ]
+
+jobs:
+
+  synctags:
+
+    name: Sync Tags
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PA_TOKEN }}
+
+      - name:
+        run: |
+          git remote add fork git@github.com:genx7up/ramium.git
+          for TAG in $(comm -23 <(git ls-remote --tags fork | grep -v '\^{}' | awk '{print $2}') <(git ls-remote --tags origin | grep -v '\^{}' | awk '{print $2}')); do
+            git fetch --depth=1 fork $TAG:$TAG
+          done
+          git push origin --tags
