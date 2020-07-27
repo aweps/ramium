@@ -3,9 +3,9 @@ name: Docker
 on:
   push:
     branches:
-      - master
+    - master
     tags:
-      - '*'
+    - '*'
   pull_request:
     branches: [ master ]
   release:
