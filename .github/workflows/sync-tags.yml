@@ -22,8 +22,11 @@ jobs:
         run: |
           git remote add fork https://x-access-token:${PA_TOKEN}@github.com/genx7up/ramium.git
           for TAG in $(comm -23 <(git ls-remote --tags fork | grep -v '\^{}' | grep -v '-' | awk '{print $2}') <(git ls-remote --tags origin | grep -v '\^{}' | awk '{print $2}')); do
-            git tag $TAG `git log master $TAG..master --ancestry-path --merges --oneline | tail -n1 | awk '{print $1;}'`
-            #git fetch fork $TAG:$TAG --no-tags
+            git fetch fork $TAG:$TAG --no-tags
+            TAG=$(echo $TAG | sed 's/refs\/tags\///')
+            MERGE_COMMIT=$(git log master $TAG..master --ancestry-path --merges --oneline | tail -n1 | awk '{print $1;}')
+            git tag -d $TAG
+            git tag $TAG $MERGE_COMMIT
             git push origin --tags
           done
           
