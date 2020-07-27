@@ -20,13 +20,18 @@ jobs:
 
       - name: Sync Tags
         run: |
+          set -x
           git remote add fork https://x-access-token:${PA_TOKEN}@github.com/genx7up/ramium.git
           for TAG in $(comm -23 <(git ls-remote --tags fork | grep -v '\^{}' | grep -v '-' | awk '{print $2}') <(git ls-remote --tags origin | grep -v '\^{}' | awk '{print $2}')); do
             git fetch fork $TAG:$TAG --no-tags
             TAG=$(echo $TAG | sed 's/refs\/tags\///')
+            echo $TAG
             MERGE_COMMIT=$(git log master $TAG..master --ancestry-path --merges --oneline | tail -n1 | awk '{print $1;}')
+            echo $COMMIT
             git tag -d $TAG
+            git tag
             git tag $TAG $MERGE_COMMIT
+            git tag
             git push origin --tags
           done
           
