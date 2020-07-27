@@ -2,9 +2,9 @@ name: Docker
 
 on:
   push:
-    branches: [ master ]
-    tags: 
-      - '*'
+    branches:
+      - master
+      - 'refs/tags/*'
   pull_request:
     branches: [ master ]
   release:
