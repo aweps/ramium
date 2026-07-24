@@ -11,7 +11,10 @@ jobs:
   pick-runner:
     name: Pick runner
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     # Belt-and-braces for a probe-JOB failure (e.g. GitHub cannot resolve
     # the action itself — the one mode fallback-on-error cannot catch, since
     # it never gets to run): continue-on-error keeps this job's conclusion
@@ -21,6 +24,9 @@ jobs:
     # skipped required check PASSES branch protection with the gate never
     # having run.
     continue-on-error: true
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     runs-on: ubuntu-latest
     outputs:
